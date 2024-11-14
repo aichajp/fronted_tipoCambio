@@ -1,0 +1,38 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const TipoCambio = () => {
+    const [tipoCambio, setTipoCambio] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Realiza una solicitud al backend para obtener el tipo de cambio
+        axios.get('http://localhost:8080/api/tipoCambioDia')
+            .then(response => {
+                setTipoCambio(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error al obtener el tipo de cambio:", error);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) return <p>Cargando...</p>;
+
+    return (
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+            <h1>Tipo de Cambio</h1>
+            {tipoCambio ? (
+                <div>
+                    <p><strong>Fecha:</strong> {tipoCambio.fecha}</p>
+                    <p><strong>Tipo de Cambio (Quetzal):</strong> Q{tipoCambio.referencia}</p>
+                </div>
+            ) : (
+                <p>No se pudo obtener el tipo de cambio.</p>
+            )}
+        </div>
+    );
+};
+
+export default TipoCambio;
