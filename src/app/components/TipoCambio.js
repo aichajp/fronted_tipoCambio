@@ -4,21 +4,27 @@ import axios from 'axios';
 const TipoCambio = () => {
     const [tipoCambio, setTipoCambio] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Realiza una solicitud al backend para obtener el tipo de cambio
-        axios.get('http://localhost:8080/api/tipoCambioDia')
-            .then(response => {
+        const fetchTipoCambio = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/tipoCambioDia');
                 setTipoCambio(response.data);
                 setLoading(false);
-            })
-            .catch(error => {
-                console.error("Error al obtener el tipo de cambio:", error);
+            } catch (err) {
+                setError("Error al obtener el tipo de cambio");
                 setLoading(false);
-            });
+                console.error("Error al obtener el tipo de cambio:", err);
+            }
+        };
+
+        fetchTipoCambio();
     }, []);
 
     if (loading) return <p>Cargando...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div style={{ padding: '20px', textAlign: 'center' }}>
