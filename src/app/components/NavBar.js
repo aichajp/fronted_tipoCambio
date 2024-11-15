@@ -1,21 +1,25 @@
-import Image from 'next/image';
+import { FaHome, FaInfoCircle, FaUniversity } from 'react-icons/fa';
 
-const NavBar = () => {
+const NavBar = ({ onNavClick }) => {
     return (
-        <header className="flex justify-between items-center p-6 bg-white shadow-md">
-            <div className="flex items-center gap-2">
-                <Image
-                    src=""
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                />
-                <span className="text-xl font-bold text-gray-800">UMG</span>
+        <header className="flex justify-between items-center p-6 bg-gradient-to-r from-red-500 to-blue-600 shadow-lg">
+            <div className="flex items-center gap-2 text-white">
+                <FaUniversity className="text-2xl" />
+                <span className="text-2xl font-bold">Universidad Mariano Gálvez de Guatemala</span>
             </div>
             <nav className="space-x-6">
-                <a href="#home" className="text-gray-700 hover:text-gray-900">Pagina Principal</a>
-                <a href="#acerca" className="text-gray-700 hover:text-gray-900">Acerca de</a>
+                <button 
+                    onClick={() => onNavClick('home')} 
+                    className="flex items-center gap-2 text-white text-lg font-medium hover:text-yellow-300 transition-colors duration-200"
+                >
+                    <FaHome /> Pagina Principal
+                </button>
+                <button 
+                    onClick={() => onNavClick('acercade')} 
+                    className="flex items-center gap-2 text-white text-lg font-medium hover:text-yellow-300 transition-colors duration-200"
+                >
+                    <FaInfoCircle /> Acerca de
+                </button>
             </nav>
         </header>
     );
