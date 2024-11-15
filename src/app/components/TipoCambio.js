@@ -1,3 +1,4 @@
+// components/TipoCambio.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -7,7 +8,6 @@ const TipoCambio = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Realiza una solicitud al backend para obtener el tipo de cambio
         const fetchTipoCambio = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/tipoCambioDia');
@@ -23,21 +23,24 @@ const TipoCambio = () => {
         fetchTipoCambio();
     }, []);
 
-    if (loading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) return <p className="text-gray-500 text-center">Cargando...</p>;
+    if (error) return <p className="text-red-500 text-center">{error}</p>;
 
     return (
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h1>Tipo de Cambio</h1>
+        <section id="tipoCambio" className="bg-white/80 backdrop-blur-md p-10 rounded-lg shadow-lg max-w-md mx-auto text-center mt-10">
+            <h1 className="text-2xl font-semibold text-red-600 mb-4">TIPO DE CAMBIO</h1>
             {tipoCambio ? (
                 <div>
-                    <p><strong>Fecha:</strong> {tipoCambio.fecha}</p>
-                    <p><strong>Tipo de Cambio (Quetzal):</strong> Q{tipoCambio.referencia}</p>
+                    <p className="text-gray-700"><strong>Fecha:</strong> {tipoCambio.fecha}</p>
+                    <p className="text-xl font-bold text-blue-600 mt-2">
+                        Tipo de Cambio: Q{tipoCambio.referencia}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-2">Fuente: Banco de Guatemala</p>
                 </div>
             ) : (
-                <p>No se pudo obtener el tipo de cambio.</p>
+                <p className="text-gray-500">No se pudo obtener el tipo de cambio.</p>
             )}
-        </div>
+        </section>
     );
 };
 
